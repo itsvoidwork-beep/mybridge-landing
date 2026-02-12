@@ -74,17 +74,17 @@ const modules = [
       'Multi-currency and multi-location support',
     ],
     detailedFeatures: [
-      { title: 'Flexible Pay Structure', description: 'Create unlimited salary components', icon: '🏗️' },
-      { title: 'Automated Tax Calculations', description: 'Always-on compliance with the latest slabs', icon: '🧮' },
-      { title: 'Statutory Reports', description: 'Form 16, 24Q, PF ECR, ESI returns in one click', icon: '📋' },
-      { title: 'Payslip Distribution', description: 'Secure email or ESS delivery with passwords', icon: '📧' },
-      { title: 'Bank Integration', description: 'Generate NEFT/RTGS files for every bank', icon: '🏦' },
-      { title: 'Arrears & Bonus', description: 'Handle arrears, incentives, and bonus effortlessly', icon: '💸' },
+      { title: 'Flexible Pay Structure', description: 'Create unlimited salary components - Basic, HRA, Allowances, Bonuses, Deductions', icon: '🏗️' },
+      { title: 'Automated Tax Calculations', description: 'Real-time computation of Income Tax, Professional Tax, PF, ESI with latest rules', icon: '🧮' },
+      { title: 'Statutory Reports', description: 'One-click generation of Form 16, 24Q, PF ECR, ESI returns, and bonus calculations', icon: '📋' },
+      { title: 'Payslip Distribution', description: 'Automated email delivery of payslips with password protection', icon: '📧' },
+      { title: 'Bank Integration', description: 'Generate NEFT/RTGS files for direct salary credit to employee accounts', icon: '🏦' },
+      { title: 'Arrears & Bonus', description: 'Handle salary arrears, annual bonus, incentives, and one-time payments', icon: '💸' },
     ],
     benefits: ['95% faster payroll processing', 'Zero calculation errors', '100% statutory compliance', 'Real-time audit trails'],
     useCases: [
       'Manufacturing units with complex shift allowances',
-      'Multi-location enterprises with state-specific compliance',
+      'Multi-location companies with different state compliances',
       'Service companies with variable pay structures',
     ],
   },
@@ -94,7 +94,7 @@ const modules = [
     icon: '📅',
     description: 'Smart attendance tracking with leave automation',
     features: [
-      'Biometric device integration (all leading brands)',
+      'Biometric device integration (All major brands)',
       'Geo-fencing & GPS-based attendance',
       'Flexible shift management and roster planning',
       'Multi-level leave request workflows',
@@ -102,15 +102,15 @@ const modules = [
       'Real-time attendance dashboards and alerts',
     ],
     detailedFeatures: [
-      { title: 'Biometric Integration', description: 'Fingerprint, face recognition, RFID devices', icon: '👆' },
-      { title: 'Mobile Attendance', description: 'Geo-fenced mobile punch with selfie capture', icon: '📱' },
-      { title: 'Shift Rosters', description: 'Rotating, night, split shifts with overtime rules', icon: '🔄' },
-      { title: 'Leave Policies', description: 'Unlimited leave types & custom accruals', icon: '📝' },
-      { title: 'Approval Workflow', description: 'Multi-level approvals with alerts', icon: '✔️' },
-      { title: 'Analytics', description: 'Late, early, absenteeism analytics', icon: '📊' },
+      { title: 'Biometric Integration', description: 'Seamless integration with fingerprint, face recognition, and RFID devices', icon: '👆' },
+      { title: 'Mobile Attendance', description: 'Geo-fenced mobile punch-in/out with selfie capture and location tracking', icon: '📱' },
+      { title: 'Shift Roster', description: 'Create rotating shifts, night shifts, split shifts with automatic overtime calculation', icon: '🔄' },
+      { title: 'Leave Policies', description: 'Configure unlimited leave types - Casual, Sick, Earned, Comp-off, Maternity, LOP', icon: '📝' },
+      { title: 'Approval Workflow', description: 'Multi-level approval chains with email/SMS notifications', icon: '✔️' },
+      { title: 'Attendance Reports', description: 'Daily/monthly attendance reports, late-coming, early-going, absenteeism analytics', icon: '📊' },
     ],
-    benefits: ['Eliminate buddy punching', '99% attendance accuracy', '70% reduction in leave queries', 'Real-time visibility'],
-    useCases: ['Manufacturing with 24x7 shifts', 'Field sales teams', 'Hospitals with complex rosters'],
+    benefits: ['Eliminate buddy punching', '99% attendance accuracy', '70% reduction in leave queries', 'Real-time workforce visibility'],
+    useCases: ['Manufacturing with 24x7 shift operations', 'Field sales teams with remote check-ins', 'Healthcare with complex shift rotations'],
   },
   {
     id: 'performance',
@@ -119,30 +119,30 @@ const modules = [
     description: 'Goal setting and continuous performance tracking',
     features: [
       'KPI & OKR framework with goal cascading',
-      '360° feedback from peers and managers',
+      '360-degree feedback from peers and managers',
       'Quarterly and annual performance reviews',
       'Goal tracking with real-time progress updates',
       'One-on-one meeting notes and action items',
       'Performance analytics and ratings distribution',
     ],
     detailedFeatures: [
-      { title: 'Goal Management', description: 'Set SMART goals linked to company priorities', icon: '🎯' },
-      { title: '360° Feedback', description: 'Peers, managers, reports, and self-feedback', icon: '🔄' },
-      { title: 'Performance Reviews', description: 'Structured cycles with normalization', icon: '⭐' },
-      { title: 'Continuous Feedback', description: 'In-the-moment praise and coaching', icon: '💬' },
-      { title: '1:1 Meetings', description: 'Agenda templates and action tracking', icon: '👥' },
-      { title: 'Analytics Dashboard', description: 'Rating distribution, top performers, risks', icon: '📈' },
+      { title: 'Goal Management', description: 'Set SMART goals, link to company objectives, track progress with milestones', icon: '🎯' },
+      { title: '360° Feedback', description: 'Collect feedback from managers, peers, direct reports, and self-assessment', icon: '🔄' },
+      { title: 'Performance Reviews', description: 'Structured appraisal cycles with rating scales, competency matrix, and normalization', icon: '⭐' },
+      { title: 'Continuous Feedback', description: 'Real-time praise, constructive feedback, and coaching throughout the year', icon: '💬' },
+      { title: '1-on-1 Meetings', description: 'Schedule check-ins, document discussions, track action items and follow-ups', icon: '👥' },
+      { title: 'Analytics Dashboard', description: 'Performance trends, rating distribution, high/low performers, flight risk analysis', icon: '📈' },
     ],
-    benefits: ['Align goals with strategy', 'Spot top performers early', 'Reduce turnover', 'Data-driven promotions'],
-    useCases: ['IT services', 'Sales orgs', 'Service companies'],
+    benefits: ['Align individual goals with company objectives', 'Identify top performers and development areas', 'Reduce turnover with continuous engagement', 'Data-driven promotion decisions'],
+    useCases: ['IT companies with project-based performance', 'Sales teams with target-driven KPIs', 'Service organizations with competency frameworks'],
   },
   {
     id: 'recruitment',
     title: 'Recruitment & Onboarding',
     icon: '👥',
-    description: 'End-to-end hiring automation',
+    description: 'End-to-end hiring process automation',
     features: [
-      'Multi-channel job posting',
+      'Multi-channel job posting (Portal, LinkedIn, Naukri)',
       'Applicant tracking with resume parsing',
       'Interview scheduling with calendar integration',
       'Offer letter generation and e-signature',
@@ -150,39 +150,39 @@ const modules = [
       'New hire buddy assignment and training tracking',
     ],
     detailedFeatures: [
-      { title: 'Job Posting', description: 'Broadcast to LinkedIn, Naukri, portals', icon: '📢' },
-      { title: 'Resume Screening', description: 'AI parsing, scoring, talent pools', icon: '🔍' },
-      { title: 'Interview Management', description: 'Slots, panels, structured feedback', icon: '🎤' },
-      { title: 'Offer Management', description: 'Templates, e-sign, negotiation tracking', icon: '📄' },
-      { title: 'Digital Onboarding', description: 'Pre-joining portal & document uploads', icon: '🚀' },
-      { title: 'Training & Buddy', description: 'Checklist, mentor, training progress', icon: '🎓' },
+      { title: 'Job Posting', description: 'Create JDs, post to multiple job boards, track source effectiveness', icon: '📢' },
+      { title: 'Resume Screening', description: 'AI-powered resume parsing, candidate scoring, skill matching', icon: '🔍' },
+      { title: 'Interview Management', description: 'Schedule interviews, share feedback forms, conduct virtual interviews', icon: '🎤' },
+      { title: 'Offer Management', description: 'Generate offer letters, track acceptance, manage salary negotiations', icon: '📄' },
+      { title: 'Digital Onboarding', description: 'Pre-joining portal, document upload, background verification tracking', icon: '🚀' },
+      { title: 'Training & Buddy', description: 'Assign mentors, create onboarding checklist, track training completion', icon: '🎓' },
     ],
-    benefits: ['60% faster time-to-hire', 'Better candidate experience', '50% faster onboarding', 'Higher retention'],
-    useCases: ['Retail/BPO volume hiring', 'Campus hiring', 'Leadership hiring'],
+    benefits: ['60% faster time-to-hire', 'Better candidate experience', '50% reduction in onboarding time', 'Improved new hire retention'],
+    useCases: ['High-volume hiring for retail and BPO', 'Campus recruitment for IT companies', 'Executive hiring with multi-round interviews'],
   },
   {
     id: 'employee-self-service',
     title: 'Employee Self Service',
     icon: '📱',
-    description: 'Empower employees with a unified portal',
+    description: 'Empower employees with self-service portal',
     features: [
-      'Personal info & documents',
+      'Personal information and documents management',
       'Leave application and balance tracking',
-      'Attendance regularization',
-      'Payslip downloads & tax declarations',
-      'Reimbursement claims',
-      'Mobile app access',
+      'Attendance records and regularization requests',
+      'Payslip downloads and tax declarations',
+      'Reimbursement claims submission',
+      'Mobile app for on-the-go access',
     ],
     detailedFeatures: [
-      { title: 'Employee Profile', description: 'Self-manage addresses, bank, documents', icon: '👤' },
-      { title: 'Leave Management', description: 'Apply, track balances, calendars', icon: '🏖️' },
-      { title: 'Attendance Portal', description: 'Regularize punches, monthly trends', icon: '⏰' },
-      { title: 'Payroll Access', description: 'Payslips, Form 16, investment proofs', icon: '💵' },
-      { title: 'Claims & Expenses', description: 'Submit bills, track reimbursements', icon: '🧾' },
-      { title: 'Mobile App', description: 'iOS & Android with push notifications', icon: '📲' },
+      { title: 'Employee Profile', description: 'Update contact details, emergency contacts, bank account, address proof', icon: '👤' },
+      { title: 'Leave Management', description: 'Apply leaves, check balance, view leave history, calendar view', icon: '🏖️' },
+      { title: 'Attendance Portal', description: 'View attendance, apply regularization, check in-out times, monthly summary', icon: '⏰' },
+      { title: 'Payroll Access', description: 'Download payslips, Form 16, view salary breakup, investment declarations', icon: '💵' },
+      { title: 'Claims & Expenses', description: 'Submit expense claims, upload bills, track reimbursement status', icon: '🧾' },
+      { title: 'Mobile App', description: 'iOS & Android apps with push notifications and offline access', icon: '📲' },
     ],
-    benefits: ['80% fewer HR queries', 'Higher satisfaction', '24/7 HR desk', 'Paperless workflows'],
-    useCases: ['Distributed workforce', 'Field employees', 'Remote & hybrid orgs'],
+    benefits: ['80% reduction in HR queries', 'Improved employee satisfaction', '24/7 access to HR services', 'Paperless HR operations'],
+    useCases: ['Distributed workforce across locations', 'Field employees with limited office access', 'Remote and hybrid work models'],
   },
   {
     id: 'expense',
@@ -194,19 +194,19 @@ const modules = [
       'Mobile receipt capture with OCR',
       'Multi-level approval workflows',
       'Mileage calculation for travel expenses',
-      'Accounting integrations',
+      'Integration with accounting systems',
       'Budget tracking and overspend alerts',
     ],
     detailedFeatures: [
-      { title: 'Policy Engine', description: 'Per-diem, class, hotel, and limit rules', icon: '📜' },
-      { title: 'Receipt OCR', description: 'Scan receipts, auto-categorize spend', icon: '📸' },
-      { title: 'Approvals', description: 'Role-based approvals & finance checks', icon: '✅' },
-      { title: 'Travel', description: 'Mileage calculator & itinerary expenses', icon: '✈️' },
-      { title: 'Reimbursement', description: 'Salary credit, bank transfer, or cheque', icon: '💰' },
-      { title: 'Analytics', description: 'Category spend & GST-ready reports', icon: '📊' },
+      { title: 'Expense Policies', description: 'Define per-diem rates, travel class, hotel budgets, expense limits by role', icon: '📜' },
+      { title: 'Receipt Management', description: 'Capture receipts via mobile, OCR extraction, automatic categorization', icon: '📸' },
+      { title: 'Approval Workflow', description: 'Role-based approvals, amount thresholds, finance team verification', icon: '✅' },
+      { title: 'Travel Expenses', description: 'Mileage calculator, advance requests, multi-city trip expenses', icon: '✈️' },
+      { title: 'Reimbursement', description: 'Direct bank transfer, salary credit, or cheque payment', icon: '💰' },
+      { title: 'Reports & Analytics', description: 'Expense trends, category-wise spending, budget utilization, GST reports', icon: '📊' },
     ],
-    benefits: ['Faster reimbursements', '100% receipt compliance', 'Budget discipline', 'Reduced expense fraud'],
-    useCases: ['Travel-heavy teams', 'Consulting projects', 'Billable organizations'],
+    benefits: ['Faster reimbursement processing', '100% receipt compliance', 'Better budget control', 'Reduced expense fraud'],
+    useCases: ['Sales teams with frequent travel', 'Project-based consulting firms', 'Organizations with client billable expenses'],
   },
 ]
 
@@ -258,33 +258,33 @@ const caseStudies = [
     company: 'JK Tyre',
     industry: 'Manufacturing',
     employees: '1200+',
-    challenge: 'Manual payroll processing taking 10 days/month across multiple plants',
-    solution: 'MyBridge automated payroll with multi-location support',
+    challenge: 'Manual payroll processing taking 10 days/month across multiple manufacturing units',
+    solution: 'Implemented MyBridge automated payroll with multi-location support',
     result: '90% reduction in processing time, zero errors, seamless compliance',
   },
   {
     company: 'Zydus Pharma',
-    industry: 'Pharma',
+    industry: 'Pharmaceuticals',
     employees: '2500+',
-    challenge: 'Complex shift management and attendance tracking for R&D + manufacturing',
-    solution: 'Biometric + geo-fencing attendance with roster automation',
-    result: '95% attendance accuracy and real-time visibility',
+    challenge: 'Complex shift management and attendance tracking for R&D and manufacturing teams',
+    solution: 'Deployed biometric + geo-fencing solution with shift roster automation',
+    result: 'Real-time visibility, 95% attendance accuracy, improved productivity',
   },
   {
     company: 'ShopKirana',
     industry: 'Retail Tech',
     employees: '800+',
-    challenge: 'High turnover, slow onboarding, distributed workforce',
-    solution: 'Digital onboarding with self-service mobile access',
-    result: '50% faster onboarding, 30% higher retention',
+    challenge: 'High employee turnover, slow onboarding, distributed workforce management',
+    solution: 'Digital onboarding with self-service portal and mobile app access',
+    result: '50% faster onboarding, 30% improved retention, better employee satisfaction',
   },
   {
     company: 'Vasu Chemicals',
     industry: 'Chemical Manufacturing',
     employees: '600+',
-    challenge: 'Statutory complexity & multi-location payroll',
-    solution: 'Centralized HRMS with automated compliance alerts',
-    result: '100% compliance and 80% time saved for HR',
+    challenge: 'Statutory compliance complexity and multiple location payroll management',
+    solution: 'Comprehensive HRMS with automated compliance and centralized payroll',
+    result: '100% compliance achieved, 80% time saved in HR operations',
   },
 ]
 
@@ -293,19 +293,19 @@ const testimonials = [
     name: 'Priya Sharma',
     role: 'HR Director',
     company: 'TechCorp India',
-    quote: 'MyBridge transformed payroll for us—what took 10 days now takes 2 hours.',
+    quote: 'MyBridge transformed our HR operations. Payroll that took 10 days now takes 2 hours!',
   },
   {
     name: 'Rajesh Kumar',
     role: 'Operations Head',
-    company: 'Global Manufacturing Co.',
-    quote: 'Geo-fencing based attendance is a game changer for our multi-site workforce.',
+    company: 'Manufacturing Co',
+    quote: 'The attendance tracking with geo-fencing is a game-changer for our multi-site operations.',
   },
   {
     name: 'Anita Desai',
     role: 'CEO',
     company: 'Retail Chain',
-    quote: 'Employee engagement improved drastically with the mobile-first self-service portal.',
+    quote: 'Employee engagement improved significantly with the self-service portal. Highly recommend!',
   },
 ]
 
@@ -389,19 +389,19 @@ export default function App() {
       id: 'home',
       content: (
         <Flex direction="column" justify="center" minH="100vh" px={{ base: 6, md: 16 }} py={{ base: 24, md: 32 }} bgGradient={heroGradient} color="white">
-          <Stack spacing={8} maxW="5xl">
-            <Tag size="lg" bg="whiteAlpha.200" w="fit-content" borderRadius="full">
-              Intelligent Spend & HR Governance
+          <Stack spacing={8} maxW="5xl" textAlign="center" mx="auto">
+            <Tag size="lg" bg="whiteAlpha.200" w="fit-content" borderRadius="full" mx="auto">
+              The Future of Workforce Management
             </Tag>
             <Heading fontSize={{ base: '4xl', md: '6xl' }} lineHeight="1.1">
-              Run HR, Finance & Compliance in one <chakra.span color={accentColor}>unified workspace</chakra.span>
+              Transform Your <chakra.span color={accentColor}>HR Operations</chakra.span>
             </Heading>
-            <Text fontSize="lg" opacity={0.9} maxW="3xl">
-              The MyBridge council of automation keeps payroll precise, attendance transparent, budgets optimized, and employees delighted—all with audit-ready traceability.
+            <Text fontSize={{ base: 'lg', md: 'xl' }} opacity={0.9} maxW="3xl" mx="auto">
+              A complete HRMS solution designed to automate payroll, attendance, and performance so you can focus on your people.
             </Text>
-            <Flex gap={4} wrap="wrap">
-              <Button size="lg" colorScheme="orange" bg={accentColor} onClick={() => handleNav(sections.findIndex((s) => s.id === 'contact'))}>
-                Book Demo
+            <Flex gap={4} wrap="wrap" justify="center">
+              <Button size="lg" colorScheme="orange" bg="white" color="#0052CC" _hover={{ bg: 'whiteAlpha.900' }} onClick={() => handleNav(sections.findIndex((s) => s.id === 'contact'))}>
+                Get Started Free
               </Button>
               <Button size="lg" variant="outline" color="white" borderColor="whiteAlpha.600" onClick={() => handleNav(sections.findIndex((s) => s.id === 'modules'))}>
                 Explore Modules
@@ -425,16 +425,21 @@ export default function App() {
         <SectionContainer>
           <Stack spacing={10} maxW="6xl">
             <Heading textAlign="center">About MyBridge</Heading>
-            <Text textAlign="center" color={textSubtle} maxW="4xl" mx="auto">
-              Inspired by the visual language of MyVyay, MyBridge blends deep compliance expertise with a fluid experience for HR, Finance, and Business teams.
-            </Text>
+            <Card cardBg={cardBg} borderColor={borderColor} p={8}>
+              <Heading size="lg" mb={4}>
+                Our Mission
+              </Heading>
+              <Text fontSize="lg" color={textSubtle}>
+                We're on a mission to make HR operations simple, efficient, and delightful for every organization. MyBridge was born from the frustration of dealing with complex, outdated HR systems. We believe managing people should be easy, not bureaucratic.
+              </Text>
+            </Card>
             <SimpleGrid columns={{ base: 1, md: 3 }} spacing={6}>
               {[
-                { icon: <TrendingUp color={accentColor} />, title: 'Growing Fast', text: '500+ companies onboarded' },
+                { icon: <TrendingUp color={accentColor} />, title: 'Growing Fast', text: '500+ companies trust us' },
                 { icon: <Award color={accentColor} />, title: 'Award Winning', text: 'Best HR Tech 2024' },
-                { icon: <Users color={accentColor} />, title: 'Expert Team', text: '50+ HR specialists' },
+                { icon: <Users color={accentColor} />, title: 'Expert Team', text: '50+ HR professionals' },
               ].map((item) => (
-                <Card key={item.title} cardBg={cardBg} borderColor={borderColor}>
+                <Card key={item.title} cardBg={cardBg} borderColor={borderColor} textAlign="center">
                   <Box mb={4}>{item.icon}</Box>
                   <Heading size="md" mb={2}>
                     {item.title}
@@ -443,6 +448,24 @@ export default function App() {
                 </Card>
               ))}
             </SimpleGrid>
+            <Card cardBg="linear-gradient(135deg, rgba(59,130,246,0.15), rgba(99,102,241,0.15))" borderColor="transparent" p={8}>
+              <Heading size="lg" mb={4}>
+                Why We're Different
+              </Heading>
+              <Stack spacing={3} fontSize="lg" color={textSubtle}>
+                {[
+                  'Built specifically for the Indian market with local compliance',
+                  'Simple pricing with no hidden costs',
+                  'Dedicated customer success team',
+                  'Regular product updates based on customer feedback',
+                ].map((item) => (
+                  <Flex key={item} align="center" gap={3}>
+                    <CheckCircle2 color={accentColor} />
+                    <Text>{item}</Text>
+                  </Flex>
+                ))}
+              </Stack>
+            </Card>
           </Stack>
         </SectionContainer>
       ),
@@ -458,10 +481,10 @@ export default function App() {
             </Text>
             <SimpleGrid columns={{ base: 1, md: 2 }} spacing={6}>
               {[
-                { emoji: '🎯', title: 'Core HR Management', text: 'Employee database, org charts, lifecycle automation, document vault.' },
-                { emoji: '📊', title: 'Analytics & Insights', text: 'Cross-module dashboards, anomaly alerts, predictive visuals.' },
-                { emoji: '🔐', title: 'Security & Compliance', text: 'Role-based access, full audit log, policy templates, DLP controls.' },
-                { emoji: '🧩', title: 'Integration Fabric', text: 'REST APIs, webhooks, connectors for ERP, payroll, collaboration tools.' },
+                { emoji: '🎯', title: 'Core HR Management', text: 'Employee database, org charts, document management, and employee lifecycle tracking.' },
+                { emoji: '📊', title: 'Analytics & Reports', text: 'Real-time dashboards, custom reports, and predictive analytics for informed decision making.' },
+                { emoji: '🔐', title: 'Security & Compliance', text: 'Role-based access, audit trails, GDPR compliance, and regular security audits.' },
+                { emoji: '🧩', title: 'Seamless Integration', text: 'Connect with your existing tools via REST APIs, webhooks, and pre-built integrations.' },
               ].map((feature) => (
                 <Card key={feature.title} cardBg={cardBg} borderColor={borderColor}>
                   <Text fontSize="3xl">{feature.emoji}</Text>
@@ -509,7 +532,14 @@ export default function App() {
                   ❌ Manual Process
                 </Heading>
                 <Stack color="#B91C1C" spacing={3} fontWeight="500">
-                  {['10+ days for payroll', 'Error-prone spreadsheets', 'Opaque approvals', 'Penalty-prone compliance', 'No real-time view'].map((item) => (
+                  {[
+                    '10+ days for monthly payroll processing',
+                    'High risk of calculation errors',
+                    'Spreadsheet-based tracking',
+                    'Compliance headaches and penalties',
+                    'No real-time data access',
+                    'Poor employee experience',
+                  ].map((item) => (
                     <Text key={item}>• {item}</Text>
                   ))}
                 </Stack>
@@ -519,7 +549,14 @@ export default function App() {
                   ✅ With MyBridge
                 </Heading>
                 <Stack color="#166534" spacing={3} fontWeight="500">
-                  {['Payroll in 2 hours', 'Auto compliance updates', 'Transparent approvals', 'Live dashboards', 'Self-service for teams'].map((item) => (
+                  {[
+                    'Payroll processed in 2 hours',
+                    '100% accurate automated calculations',
+                    'Centralized cloud-based system',
+                    'Automatic compliance updates',
+                    'Real-time dashboards & analytics',
+                    'Self-service portal for employees',
+                  ].map((item) => (
                     <Text key={item}>• {item}</Text>
                   ))}
                 </Stack>
