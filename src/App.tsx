@@ -30,7 +30,7 @@ import {
   useDisclosure,
   useToast,
 } from '@chakra-ui/react'
-import { useMemo, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import {
   Award,
   Building2,
@@ -42,6 +42,8 @@ import {
   TrendingUp,
   Users,
   X,
+  ChevronLeft,
+  ChevronRight,
 } from 'lucide-react'
 
 const sections = [
@@ -107,7 +109,7 @@ const modules = [
       { title: 'Approval Workflow', description: 'Multi-level approvals with alerts', icon: '✔️' },
       { title: 'Analytics', description: 'Late, early, absenteeism analytics', icon: '📊' },
     ],
-    benefits: ['Eliminate buddy punching', '99% attendance accuracy', '70% reduction in leave queries', 'Real-time workforce visibility'],
+    benefits: ['Eliminate buddy punching', '99% attendance accuracy', '70% reduction in leave queries', 'Real-time visibility'],
     useCases: ['Manufacturing with 24x7 shifts', 'Field sales teams', 'Hospitals with complex rosters'],
   },
   {
@@ -131,7 +133,7 @@ const modules = [
       { title: '1:1 Meetings', description: 'Agenda templates and action tracking', icon: '👥' },
       { title: 'Analytics Dashboard', description: 'Rating distribution, top performers, risks', icon: '📈' },
     ],
-    benefits: ['Align goals with strategy', 'Spot top performers early', 'Reduce turnover with engagement', 'Data-driven promotions'],
+    benefits: ['Align goals with strategy', 'Spot top performers early', 'Reduce turnover', 'Data-driven promotions'],
     useCases: ['IT services', 'Sales orgs', 'Service companies'],
   },
   {
@@ -149,13 +151,13 @@ const modules = [
     ],
     detailedFeatures: [
       { title: 'Job Posting', description: 'Broadcast to LinkedIn, Naukri, portals', icon: '📢' },
-      { title: 'Resume Screening', description: 'AI parsing, scoring, and talent pools', icon: '🔍' },
-      { title: 'Interview Management', description: 'Slots, panels, and structured feedback', icon: '🎤' },
+      { title: 'Resume Screening', description: 'AI parsing, scoring, talent pools', icon: '🔍' },
+      { title: 'Interview Management', description: 'Slots, panels, structured feedback', icon: '🎤' },
       { title: 'Offer Management', description: 'Templates, e-sign, negotiation tracking', icon: '📄' },
       { title: 'Digital Onboarding', description: 'Pre-joining portal & document uploads', icon: '🚀' },
-      { title: 'Training & Buddy', description: 'Checklist, mentor, and training progress', icon: '🎓' },
+      { title: 'Training & Buddy', description: 'Checklist, mentor, training progress', icon: '🎓' },
     ],
-    benefits: ['60% faster time-to-hire', 'Better candidate experience', '50% faster onboarding', 'Higher new-hire retention'],
+    benefits: ['60% faster time-to-hire', 'Better candidate experience', '50% faster onboarding', 'Higher retention'],
     useCases: ['Retail/BPO volume hiring', 'Campus hiring', 'Leadership hiring'],
   },
   {
@@ -169,17 +171,17 @@ const modules = [
       'Attendance regularization',
       'Payslip downloads & tax declarations',
       'Reimbursement claims',
-      'Mobile app for access anywhere',
+      'Mobile app access',
     ],
     detailedFeatures: [
       { title: 'Employee Profile', description: 'Self-manage addresses, bank, documents', icon: '👤' },
-      { title: 'Leave Management', description: 'Apply, track balances, view calendars', icon: '🏖️' },
-      { title: 'Attendance Portal', description: 'Regularize punches, see monthly trends', icon: '⏰' },
+      { title: 'Leave Management', description: 'Apply, track balances, calendars', icon: '🏖️' },
+      { title: 'Attendance Portal', description: 'Regularize punches, monthly trends', icon: '⏰' },
       { title: 'Payroll Access', description: 'Payslips, Form 16, investment proofs', icon: '💵' },
-      { title: 'Claims & Expenses', description: 'Submit bills, track reimbursement status', icon: '🧾' },
+      { title: 'Claims & Expenses', description: 'Submit bills, track reimbursements', icon: '🧾' },
       { title: 'Mobile App', description: 'iOS & Android with push notifications', icon: '📲' },
     ],
-    benefits: ['80% fewer HR queries', 'Higher employee satisfaction', '24/7 HR desk', 'Paperless workflows'],
+    benefits: ['80% fewer HR queries', 'Higher satisfaction', '24/7 HR desk', 'Paperless workflows'],
     useCases: ['Distributed workforce', 'Field employees', 'Remote & hybrid orgs'],
   },
   {
@@ -208,12 +210,12 @@ const modules = [
   },
 ]
 
-const benefits = [
+const benefitsData = [
   { icon: '⚡', title: 'Save 80% Time', description: 'Automate repetitive HR tasks' },
   { icon: '✅', title: '100% Compliance', description: 'Stay updated with labor laws' },
   { icon: '📊', title: 'Real-time Insights', description: 'Data-driven HR decisions' },
   { icon: '🔒', title: 'Secure & Reliable', description: 'Bank-grade data security' },
-  { icon: '☁️', title: 'Cloud-based', description: 'Access from anywhere, anytime' },
+  { icon: '☁️', title: 'Cloud-based', description: 'Access anywhere, anytime' },
   { icon: '🤝', title: 'Easy Integration', description: 'Connect with existing tools' },
 ]
 
@@ -320,29 +322,26 @@ const integrations = [
   { name: 'Oracle', logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Oracle_logo.svg/512px-Oracle_logo.svg.png' },
 ]
 
-const gradientBg = 'linear-gradient(135deg, #0052CC 0%, #0D8BFF 50%, #6C63FF 100%)'
+const heroGradient = 'linear-gradient(135deg, #1F1C3E 0%, #6C2BD9 45%, #F97316 100%)'
+const accentColor = '#F97316'
 
-const SectionWrapper = ({ id, children }: { id: string; children: React.ReactNode }) => (
-  <Box id={id} as="section" py={{ base: 16, md: 24 }} px={{ base: 4, md: 10 }} position="relative">
-    {children}
-  </Box>
-)
-
-function App() {
-  const [mobileMenu, setMobileMenu] = useState(false)
+export default function App() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [activeModule, setActiveModule] = useState<(typeof modules)[number] | null>(null)
+  const [currentPanel, setCurrentPanel] = useState(0)
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [touchStart, setTouchStart] = useState<number | null>(null)
+  const [touchEnd, setTouchEnd] = useState<number | null>(null)
   const modal = useDisclosure()
   const toast = useToast()
-  const navBg = useColorModeValue('white', 'gray.900')
-  const cardBg = useColorModeValue('white', 'gray.800')
-  const borderColor = useColorModeValue('gray.100', 'gray.700')
+  const navBg = useColorModeValue('white', '#0f0f1f')
+  const cardBg = useColorModeValue('white', '#1B1B32')
+  const borderColor = useColorModeValue('gray.100', '#2A2945')
+  const textSubtle = useColorModeValue('gray.600', 'gray.300')
 
-  const handleScroll = (id: string) => {
-    const el = document.getElementById(id)
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' })
-      setMobileMenu(false)
-    }
+  const handleNav = (index: number) => {
+    setCurrentPanel(index)
+    setMobileMenuOpen(false)
   }
 
   const openModule = (module: (typeof modules)[number]) => {
@@ -352,217 +351,224 @@ function App() {
 
   const submitContact = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    toast({ title: 'Message sent', description: 'Our team will contact you shortly.', status: 'success', duration: 4000 })
+    toast({
+      title: 'Message sent',
+      description: 'Our team will contact you shortly.',
+      status: 'success',
+      duration: 4000,
+      isClosable: true,
+    })
     ;(event.target as HTMLFormElement).reset()
+  }
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null)
+    setTouchStart(e.targetTouches[0].clientX)
+  }
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX)
+  }
+
+  const onTouchFinish = () => {
+    if (!touchStart || touchEnd === null) return
+    const distance = touchStart - touchEnd
+    const minSwipe = 50
+    if (distance > minSwipe && currentPanel < sections.length - 1) {
+      setCurrentPanel((prev) => prev + 1)
+    }
+    if (distance < -minSwipe && currentPanel > 0) {
+      setCurrentPanel((prev) => prev - 1)
+    }
   }
 
   const otherLogos = useMemo(() => otherCustomers, [])
 
-  return (
-    <Box minH="100vh" bg={useColorModeValue('gray.50', 'gray.900')}>
-      {/* Navigation */}
-      <Box as="header" position="fixed" top={0} left={0} right={0} zIndex={20} bg={navBg} borderBottom="1px solid" borderColor={borderColor}>
-        <Flex maxW="7xl" mx="auto" px={{ base: 4, md: 8 }} h={16} align="center" justify="space-between">
-          <Flex align="center" gap={3}>
-            <Box boxSize={10} borderRadius="xl" bgGradient={gradientBg} />
-            <Text fontWeight="bold" fontSize="xl" color="#0052CC">
-              MyBridge
+  const panelContent = [
+    {
+      id: 'home',
+      content: (
+        <Flex direction="column" justify="center" minH="100vh" px={{ base: 6, md: 16 }} py={{ base: 24, md: 32 }} bgGradient={heroGradient} color="white">
+          <Stack spacing={8} maxW="5xl">
+            <Tag size="lg" bg="whiteAlpha.200" w="fit-content" borderRadius="full">
+              Intelligent Spend & HR Governance
+            </Tag>
+            <Heading fontSize={{ base: '4xl', md: '6xl' }} lineHeight="1.1">
+              Run HR, Finance & Compliance in one <chakra.span color={accentColor}>unified workspace</chakra.span>
+            </Heading>
+            <Text fontSize="lg" opacity={0.9} maxW="3xl">
+              The MyBridge council of automation keeps payroll precise, attendance transparent, budgets optimized, and employees delighted—all with audit-ready traceability.
             </Text>
-          </Flex>
-          <Flex gap={6} display={{ base: 'none', xl: 'flex' }}>
-            {sections.map((section) => (
-              <Button key={section.id} variant="ghost" fontWeight="600" onClick={() => handleScroll(section.id)}>
-                {section.label}
+            <Flex gap={4} wrap="wrap">
+              <Button size="lg" colorScheme="orange" bg={accentColor} onClick={() => handleNav(sections.findIndex((s) => s.id === 'contact'))}>
+                Book Demo
               </Button>
-            ))}
-          </Flex>
-          <IconButton
-            aria-label="Toggle navigation"
-            icon={mobileMenu ? <X size={18} /> : <Menu size={18} />}
-            display={{ base: 'inline-flex', xl: 'none' }}
-            variant="ghost"
-            onClick={() => setMobileMenu((prev) => !prev)}
-          />
-        </Flex>
-        {mobileMenu && (
-          <Stack px={4} py={4} gap={2} borderTop="1px solid" borderColor={borderColor} bg={navBg}>
-            {sections.map((section) => (
-              <Button key={section.id} justifyContent="flex-start" variant="ghost" onClick={() => handleScroll(section.id)}>
-                {section.label}
+              <Button size="lg" variant="outline" color="white" borderColor="whiteAlpha.600" onClick={() => handleNav(sections.findIndex((s) => s.id === 'modules'))}>
+                Explore Modules
               </Button>
-            ))}
+            </Flex>
+            <SimpleGrid columns={{ base: 2, md: 4 }} spacing={6}>
+              {[{ label: 'Active Users', value: '10K+' }, { label: 'Companies', value: '500+' }, { label: 'Uptime', value: '99.9%' }, { label: 'Support', value: '24/7' }].map((stat) => (
+                <Box key={stat.label} borderRadius="2xl" bg="whiteAlpha.100" border="1px solid" borderColor="whiteAlpha.300" p={5}>
+                  <Heading size="lg">{stat.value}</Heading>
+                  <Text opacity={0.75}>{stat.label}</Text>
+                </Box>
+              ))}
+            </SimpleGrid>
           </Stack>
-        )}
-      </Box>
-
-      <Box pt={{ base: 20, md: 24 }}>
-        {/* Home */}
-        <SectionWrapper id="home">
-          <Box bgGradient={gradientBg} color="white" borderRadius="3xl" p={{ base: 8, md: 16 }} overflow="hidden" position="relative">
-            <Box position="absolute" top={-10} right={-10} boxSize={48} borderRadius="full" bg="whiteAlpha.200" />
-            <Stack spacing={8} maxW="4xl">
-              <Tag size="lg" w="fit-content" bg="whiteAlpha.200">
-                The Future of Workforce Management
-              </Tag>
-              <Heading fontSize={{ base: '4xl', md: '6xl' }}>
-                Transform Your <chakra.span color="blue.100">HR Operations</chakra.span>
-              </Heading>
-              <Text fontSize="xl" opacity={0.9} maxW="3xl">
-                A complete HRMS solution designed to automate payroll, attendance, and performance so you can focus on your people.
-              </Text>
-              <Flex gap={4} wrap="wrap">
-                <Button size="lg" colorScheme="whiteAlpha" color="#0052CC" bg="white" onClick={() => handleScroll('contact')}>
-                  Get Started Free
-                </Button>
-                <Button size="lg" variant="outline" color="white" borderColor="whiteAlpha.700" onClick={() => handleScroll('modules')}>
-                  Explore Modules
-                </Button>
-              </Flex>
-              <SimpleGrid columns={{ base: 2, md: 4 }} spacing={6}>
-                {[{ label: 'Active Users', value: '10K+' }, { label: 'Companies', value: '500+' }, { label: 'Uptime', value: '99.9%' }, { label: 'Support', value: '24/7' }].map((stat) => (
-                  <Box key={stat.label} p={5} borderRadius="xl" bg="whiteAlpha.100" border="1px solid" borderColor="whiteAlpha.300">
-                    <Heading size="lg">{stat.value}</Heading>
-                    <Text opacity={0.8}>{stat.label}</Text>
-                  </Box>
-                ))}
-              </SimpleGrid>
-            </Stack>
-          </Box>
-        </SectionWrapper>
-
-        {/* About */}
-        <SectionWrapper id="about">
-          <Stack spacing={10} maxW="6xl" mx="auto">
+        </Flex>
+      ),
+    },
+    {
+      id: 'about',
+      content: (
+        <SectionContainer>
+          <Stack spacing={10} maxW="6xl">
             <Heading textAlign="center">About MyBridge</Heading>
-            <Text fontSize="lg" textAlign="center" maxW="4xl" mx="auto" color="gray.600">
-              We make HR operations simple, efficient, and delightful. Built for India’s compliance landscape with the agility modern teams expect.
+            <Text textAlign="center" color={textSubtle} maxW="4xl" mx="auto">
+              Inspired by the visual language of MyVyay, MyBridge blends deep compliance expertise with a fluid experience for HR, Finance, and Business teams.
             </Text>
             <SimpleGrid columns={{ base: 1, md: 3 }} spacing={6}>
               {[
-                { icon: <TrendingUp color="#0052CC" />, title: 'Growing Fast', text: '500+ companies onboarded' },
-                { icon: <Award color="#0052CC" />, title: 'Award Winning', text: 'Best HR Tech 2024' },
-                { icon: <Users color="#0052CC" />, title: 'Expert Team', text: '50+ HR specialists' },
+                { icon: <TrendingUp color={accentColor} />, title: 'Growing Fast', text: '500+ companies onboarded' },
+                { icon: <Award color={accentColor} />, title: 'Award Winning', text: 'Best HR Tech 2024' },
+                { icon: <Users color={accentColor} />, title: 'Expert Team', text: '50+ HR specialists' },
               ].map((item) => (
-                <Box key={item.title} bg={cardBg} borderRadius="2xl" border="1px solid" borderColor={borderColor} p={8} textAlign="center">
+                <Card key={item.title} cardBg={cardBg} borderColor={borderColor}>
                   <Box mb={4}>{item.icon}</Box>
                   <Heading size="md" mb={2}>
                     {item.title}
                   </Heading>
-                  <Text color="gray.600">{item.text}</Text>
-                </Box>
+                  <Text color={textSubtle}>{item.text}</Text>
+                </Card>
               ))}
             </SimpleGrid>
           </Stack>
-        </SectionWrapper>
-
-        {/* Features */}
-        <SectionWrapper id="features">
-          <Stack spacing={8} maxW="6xl" mx="auto">
+        </SectionContainer>
+      ),
+    },
+    {
+      id: 'features',
+      content: (
+        <SectionContainer>
+          <Stack spacing={8} maxW="6xl">
             <Heading textAlign="center">Complete HR Suite</Heading>
-            <Text textAlign="center" color="gray.600">
-              Everything you need to manage your workforce.
+            <Text textAlign="center" color={textSubtle}>
+              Everything you need to manage your workforce in one secure platform.
             </Text>
             <SimpleGrid columns={{ base: 1, md: 2 }} spacing={6}>
               {[
-                { emoji: '🎯', title: 'Core HR Management', text: 'Employee database, org charts, document management, lifecycle tracking.' },
-                { emoji: '📊', title: 'Analytics & Reports', text: 'Real-time dashboards, custom reports, predictive analytics, exports.' },
-                { emoji: '🔐', title: 'Security & Compliance', text: 'Role-based access, audit trails, GDPR-ready, security reviews.' },
-                { emoji: '🔄', title: 'Seamless Integration', text: 'REST APIs, webhooks, and pre-built connectors.' },
+                { emoji: '🎯', title: 'Core HR Management', text: 'Employee database, org charts, lifecycle automation, document vault.' },
+                { emoji: '📊', title: 'Analytics & Insights', text: 'Cross-module dashboards, anomaly alerts, predictive visuals.' },
+                { emoji: '🔐', title: 'Security & Compliance', text: 'Role-based access, full audit log, policy templates, DLP controls.' },
+                { emoji: '🧩', title: 'Integration Fabric', text: 'REST APIs, webhooks, connectors for ERP, payroll, collaboration tools.' },
               ].map((feature) => (
-                <Box key={feature.title} bg={cardBg} borderRadius="2xl" border="1px solid" borderColor={borderColor} p={6}>
+                <Card key={feature.title} cardBg={cardBg} borderColor={borderColor}>
                   <Text fontSize="3xl">{feature.emoji}</Text>
                   <Heading size="md" mt={3} mb={2}>
                     {feature.title}
                   </Heading>
-                  <Text color="gray.600">{feature.text}</Text>
-                </Box>
+                  <Text color={textSubtle}>{feature.text}</Text>
+                </Card>
               ))}
             </SimpleGrid>
           </Stack>
-        </SectionWrapper>
-
-        {/* Benefits */}
-        <SectionWrapper id="benefits">
-          <Stack spacing={8} maxW="6xl" mx="auto">
+        </SectionContainer>
+      ),
+    },
+    {
+      id: 'benefits',
+      content: (
+        <SectionContainer>
+          <Stack spacing={8} maxW="6xl">
             <Heading textAlign="center">Benefits</Heading>
             <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={6}>
-              {benefits.map((benefit) => (
-                <Box key={benefit.title} bg={cardBg} borderRadius="2xl" border="1px solid" borderColor={borderColor} p={6}>
+              {benefitsData.map((benefit) => (
+                <Card key={benefit.title} cardBg={cardBg} borderColor={borderColor}>
                   <Text fontSize="3xl">{benefit.icon}</Text>
                   <Heading size="md" mt={3} mb={2}>
                     {benefit.title}
                   </Heading>
-                  <Text color="gray.600">{benefit.description}</Text>
-                </Box>
+                  <Text color={textSubtle}>{benefit.description}</Text>
+                </Card>
               ))}
             </SimpleGrid>
           </Stack>
-        </SectionWrapper>
-
-        {/* Why MyBridge */}
-        <SectionWrapper id="why-mybridge">
-          <Stack spacing={8} maxW="6xl" mx="auto">
+        </SectionContainer>
+      ),
+    },
+    {
+      id: 'why-mybridge',
+      content: (
+        <SectionContainer>
+          <Stack spacing={8} maxW="6xl">
             <Heading textAlign="center">Why MyBridge</Heading>
             <SimpleGrid columns={{ base: 1, md: 2 }} spacing={6}>
-              <Box border="2px solid" borderColor="red.100" bg="red.50" borderRadius="2xl" p={8}>
-                <Heading size="md" color="red.600" mb={4}>
+              <Box borderRadius="2xl" border="2px solid" borderColor="#FECDD3" bg="#FFF1F2" p={8}>
+                <Heading size="md" color="#F43F5E" mb={4}>
                   ❌ Manual Process
                 </Heading>
-                <Stack color="red.700" spacing={3}>
-                  {['10+ days for monthly payroll', 'High risk of calculation errors', 'Spreadsheet-based tracking', 'Compliance penalties', 'No real-time visibility', 'Poor employee experience'].map((item) => (
+                <Stack color="#B91C1C" spacing={3} fontWeight="500">
+                  {['10+ days for payroll', 'Error-prone spreadsheets', 'Opaque approvals', 'Penalty-prone compliance', 'No real-time view'].map((item) => (
                     <Text key={item}>• {item}</Text>
                   ))}
                 </Stack>
               </Box>
-              <Box border="2px solid" borderColor="green.100" bg="green.50" borderRadius="2xl" p={8}>
-                <Heading size="md" color="green.600" mb={4}>
+              <Box borderRadius="2xl" border="2px solid" borderColor="#BBF7D0" bg="#ECFDF5" p={8}>
+                <Heading size="md" color="#15803D" mb={4}>
                   ✅ With MyBridge
                 </Heading>
-                <Stack color="green.700" spacing={3}>
-                  {['Payroll in 2 hours', '100% automated accuracy', 'Centralized cloud platform', 'Automatic compliance updates', 'Real-time dashboards', 'Employee self-service portal'].map((item) => (
+                <Stack color="#166534" spacing={3} fontWeight="500">
+                  {['Payroll in 2 hours', 'Auto compliance updates', 'Transparent approvals', 'Live dashboards', 'Self-service for teams'].map((item) => (
                     <Text key={item}>• {item}</Text>
                   ))}
                 </Stack>
               </Box>
             </SimpleGrid>
           </Stack>
-        </SectionWrapper>
-
-        {/* Modules */}
-        <SectionWrapper id="modules">
-          <Stack spacing={8} maxW="7xl" mx="auto">
-            <Heading textAlign="center">Modules (tap to explore)</Heading>
+        </SectionContainer>
+      ),
+    },
+    {
+      id: 'modules',
+      content: (
+        <SectionContainer>
+          <Stack spacing={8} maxW="7xl">
+            <Heading textAlign="center">Modules (tap to view details)</Heading>
             <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={6}>
               {modules.map((module) => (
-                <Box key={module.id} bg={cardBg} borderRadius="2xl" border="1px solid" borderColor={borderColor} p={8} boxShadow="xl">
+                <Card key={module.id} cardBg={cardBg} borderColor={borderColor} boxShadow="lg">
                   <Text fontSize="4xl">{module.icon}</Text>
                   <Heading size="md" mt={4} mb={3}>
                     {module.title}
                   </Heading>
-                  <Text color="gray.600" mb={6}>
+                  <Text color={textSubtle} mb={6}>
                     {module.description}
                   </Text>
-                  <Button colorScheme="blue" onClick={() => openModule(module)}>
+                  <Button colorScheme="purple" bgGradient="linear(to-r, #7C3AED, #F97316)" _hover={{ opacity: 0.9 }} onClick={() => openModule(module)}>
                     View Details
                   </Button>
-                </Box>
+                </Card>
               ))}
             </SimpleGrid>
           </Stack>
-        </SectionWrapper>
-
-        {/* Case Studies */}
-        <SectionWrapper id="case-studies">
-          <Stack spacing={10} maxW="6xl" mx="auto">
+        </SectionContainer>
+      ),
+    },
+    {
+      id: 'case-studies',
+      content: (
+        <SectionContainer>
+          <Stack spacing={10} maxW="6xl">
             <Heading textAlign="center">Case Studies</Heading>
             <SimpleGrid columns={{ base: 1, md: 2 }} spacing={6}>
               {caseStudies.map((study) => (
-                <Box key={study.company} bg={cardBg} borderRadius="2xl" border="1px solid" borderColor={borderColor} p={8}>
+                <Card key={study.company} cardBg={cardBg} borderColor={borderColor}>
                   <Flex align="center" gap={4} mb={4}>
-                    <Building2 color="#0052CC" />
+                    <Building2 color={accentColor} />
                     <Box>
                       <Heading size="md">{study.company}</Heading>
-                      <Text color="gray.500">
+                      <Text color={textSubtle}>
                         {study.industry} • {study.employees}
                       </Text>
                     </Box>
@@ -574,114 +580,108 @@ function App() {
                     <Text>
                       <chakra.span fontWeight="bold">Solution:</chakra.span> {study.solution}
                     </Text>
-                    <Box bg="green.50" border="1px solid" borderColor="green.100" borderRadius="lg" p={4}>
-                      <chakra.span fontWeight="bold" color="green.700">
+                    <Box bg="#DCFCE7" border="1px solid" borderColor="#86EFAC" borderRadius="lg" p={4}>
+                      <chakra.span fontWeight="bold" color="#047857">
                         Result:
                       </chakra.span>{' '}
                       {study.result}
                     </Box>
                   </Stack>
-                </Box>
+                </Card>
               ))}
             </SimpleGrid>
           </Stack>
-        </SectionWrapper>
-
-        {/* Success Stories */}
-        <SectionWrapper id="success-stories">
-          <Stack spacing={10} maxW="6xl" mx="auto">
+        </SectionContainer>
+      ),
+    },
+    {
+      id: 'success-stories',
+      content: (
+        <SectionContainer>
+          <Stack spacing={10} maxW="6xl">
             <Heading textAlign="center">Success Stories</Heading>
             <SimpleGrid columns={{ base: 1, md: 3 }} spacing={6}>
               {testimonials.map((testimonial) => (
-                <Box key={testimonial.name} bg={cardBg} borderRadius="2xl" border="1px solid" borderColor={borderColor} p={6}>
-                  <Text fontSize="4xl" color="yellow.400" mb={4}>
+                <Card key={testimonial.name} cardBg={cardBg} borderColor={borderColor}>
+                  <Text fontSize="4xl" color="#FDE047" mb={3}>
                     “
                   </Text>
-                  <Text color="gray.700" mb={6}>
+                  <Text color={textSubtle} mb={6}>
                     {testimonial.quote}
                   </Text>
-                  <Divider mb={4} />
+                  <Divider mb={3} />
                   <Stack spacing={1}>
                     <Heading size="sm">{testimonial.name}</Heading>
-                    <Text color="gray.600" fontSize="sm">
+                    <Text color={textSubtle} fontSize="sm">
                       {testimonial.role}
                     </Text>
                     <Text color="gray.500" fontSize="sm">
                       {testimonial.company}
                     </Text>
                   </Stack>
-                </Box>
+                </Card>
               ))}
             </SimpleGrid>
           </Stack>
-        </SectionWrapper>
-
-        {/* Logos + additional customers */}
-        <SectionWrapper id="logos">
-          <Stack spacing={10} maxW="6xl" mx="auto">
-            <Heading textAlign="center">Trusted by Enterprises</Heading>
-            <SimpleGrid columns={{ base: 2, md: 4 }} spacing={8}>
+        </SectionContainer>
+      ),
+    },
+    {
+      id: 'integrations',
+      content: (
+        <SectionContainer>
+          <Stack spacing={10} maxW="7xl">
+            <Heading textAlign="center">Integrations & Clients</Heading>
+            <SimpleGrid columns={{ base: 2, md: 4 }} spacing={6}>
               {customers.map((customer) => (
-                <Stack key={customer.name} align="center" bg={cardBg} borderRadius="2xl" border="1px solid" borderColor={borderColor} p={6}>
-                  <Image src={customer.logo} alt={customer.name} h={12} objectFit="contain" fallbackSrc="https://via.placeholder.com/150?text=Logo" />
-                  <Text fontWeight="600">{customer.name}</Text>
-                  <Text fontSize="sm" color="gray.500">
+                <Card key={customer.name} cardBg={cardBg} borderColor={borderColor} align="center" textAlign="center">
+                  <Image src={customer.logo} alt={customer.name} h={12} objectFit="contain" fallbackSrc="https://via.placeholder.com/140x40?text=Logo" />
+                  <Heading size="sm" mt={3}>
+                    {customer.name}
+                  </Heading>
+                  <Text color={textSubtle} fontSize="sm">
                     {customer.industry}
                   </Text>
-                </Stack>
+                </Card>
               ))}
             </SimpleGrid>
             <SimpleGrid columns={{ base: 2, md: 4 }} spacing={4}>
               {otherLogos.map((customer) => (
-                <Stack key={customer.name} borderRadius="xl" bg={cardBg} border="1px solid" borderColor={borderColor} p={4}>
+                <Card key={customer.name} cardBg={cardBg} borderColor={borderColor}>
                   <Heading size="sm">{customer.name}</Heading>
-                  <Text fontSize="sm" color="gray.500">
+                  <Text color={textSubtle} fontSize="sm">
                     {customer.industry}
                   </Text>
-                  <Text fontSize="xs" color="gray.400">
+                  <Text fontSize="xs" color="gray.500">
                     {customer.employees} employees
                   </Text>
-                </Stack>
+                </Card>
               ))}
             </SimpleGrid>
-          </Stack>
-        </SectionWrapper>
-
-        {/* Integrations */}
-        <SectionWrapper id="integrations">
-          <Stack spacing={10} maxW="7xl" mx="auto">
-            <Heading textAlign="center">Integrations</Heading>
-            <SimpleGrid columns={{ base: 2, md: 3, lg: 5 }} spacing={6}>
+            <SimpleGrid columns={{ base: 2, md: 3, lg: 5 }} spacing={4}>
               {integrations.map((integration) => (
-                <Flex
-                  key={integration.name}
-                  bg={cardBg}
-                  borderRadius="xl"
-                  border="1px solid"
-                  borderColor={borderColor}
-                  align="center"
-                  justify="center"
-                  h={32}
-                  p={6}
-                >
-                  <Image src={integration.logo} alt={integration.name} h={12} objectFit="contain" fallbackSrc="https://via.placeholder.com/120x40?text=Logo" />
+                <Flex key={integration.name} borderRadius="xl" border="1px solid" borderColor={borderColor} bg={cardBg} h={28} align="center" justify="center" p={4}>
+                  <Image src={integration.logo} alt={integration.name} h={10} objectFit="contain" fallbackSrc="https://via.placeholder.com/120x40?text=Logo" />
                 </Flex>
               ))}
             </SimpleGrid>
             <Box textAlign="center">
-              <Button variant="outline" colorScheme="blue" onClick={() => handleScroll('contact')}>
+              <Button variant="outline" colorScheme="purple" onClick={() => handleNav(sections.findIndex((s) => s.id === 'contact'))}>
                 Need custom integration? Talk to us
               </Button>
             </Box>
           </Stack>
-        </SectionWrapper>
-
-        {/* Contact */}
-        <SectionWrapper id="contact">
-          <Stack spacing={10} maxW="6xl" mx="auto">
+        </SectionContainer>
+      ),
+    },
+    {
+      id: 'contact',
+      content: (
+        <SectionContainer>
+          <Stack spacing={10} maxW="6xl">
             <Heading textAlign="center">Contact Us</Heading>
             <Grid templateColumns={{ base: '1fr', md: '1fr 1fr' }} gap={8}>
-              <Box bg={cardBg} borderRadius="2xl" border="1px solid" borderColor={borderColor} p={8}>
+              <Card cardBg={cardBg} borderColor={borderColor}>
                 <Heading size="md" mb={6}>
                   Send us a message
                 </Heading>
@@ -703,135 +703,190 @@ function App() {
                       <FormLabel>Message</FormLabel>
                       <Textarea placeholder="Tell us about your requirements..." rows={4} name="message" />
                     </FormControl>
-                    <Button type="submit" colorScheme="blue" size="lg">
+                    <Button type="submit" colorScheme="purple" bgGradient="linear(to-r, #7C3AED, #F97316)">
                       Send Message
                     </Button>
                   </Stack>
                 </chakra.form>
-              </Box>
+              </Card>
               <Stack spacing={4}>
                 {[
-                  { icon: <Mail color="#0052CC" />, title: 'Email', lines: ['contact@mybridge.com', 'support@mybridge.com'] },
-                  { icon: <Phone color="#0052CC" />, title: 'Phone', lines: ['+91 1800-123-4567 (Toll Free)', 'Mon–Fri: 9 AM – 6 PM IST'] },
-                  { icon: <MapPin color="#0052CC" />, title: 'Office', lines: ['123 Tech Park, Bangalore', 'Karnataka 560001, India'] },
+                  { icon: <Mail color={accentColor} />, title: 'Email', lines: ['contact@mybridge.com', 'support@mybridge.com'] },
+                  { icon: <Phone color={accentColor} />, title: 'Phone', lines: ['+91 1800-123-4567 (Toll Free)', 'Mon–Fri: 9 AM – 6 PM IST'] },
+                  { icon: <MapPin color={accentColor} />, title: 'Office', lines: ['123 Tech Park, Bangalore', 'Karnataka 560001, India'] },
                 ].map((info) => (
-                  <Flex key={info.title} bg={cardBg} borderRadius="2xl" border="1px solid" borderColor={borderColor} p={6} gap={4}>
+                  <Flex key={info.title} borderRadius="2xl" border="1px solid" borderColor={borderColor} bg={cardBg} p={6} gap={4}>
                     <Box>{info.icon}</Box>
                     <Stack spacing={1}>
                       <Heading size="sm">{info.title}</Heading>
                       {info.lines.map((line) => (
-                        <Text key={line} color="gray.600">
+                        <Text key={line} color={textSubtle}>
                           {line}
                         </Text>
                       ))}
                     </Stack>
                   </Flex>
                 ))}
-                <Box bg="blue.50" borderRadius="2xl" border="1px solid" borderColor="blue.100" p={6}>
-                  <Heading size="sm" mb={3}>
+                <Card cardBg="#FEF3C7" borderColor="#FCD34D">
+                  <Heading size="sm" mb={2}>
                     Schedule a Demo
                   </Heading>
-                  <Text color="gray.600" mb={4}>
+                  <Text color="#92400E" mb={4}>
                     See MyBridge in action with a personalized walkthrough.
                   </Text>
-                  <Button colorScheme="blue" w="full" onClick={() => handleScroll('contact')}>
+                  <Button colorScheme="orange" onClick={() => handleNav(sections.findIndex((s) => s.id === 'contact'))}>
                     Book Demo Call
                   </Button>
-                </Box>
+                </Card>
               </Stack>
             </Grid>
           </Stack>
-        </SectionWrapper>
+        </SectionContainer>
+      ),
+    },
+  ]
+
+  return (
+    <Box minH="100vh" bg={useColorModeValue('#F4F4FB', '#090914')} color={useColorModeValue('gray.900', 'white')}>
+      {/* Header */}
+      <Box position="fixed" top={0} left={0} right={0} zIndex={10} bg={navBg} borderBottom="1px solid" borderColor={borderColor}>
+        <Flex maxW="7xl" mx="auto" px={{ base: 4, md: 8 }} h={16} align="center" justify="space-between">
+          <Flex align="center" gap={3}>
+            <Box boxSize={10} borderRadius="lg" bgGradient={heroGradient} />
+            <Text fontWeight="bold" fontSize="xl">
+              MyBridge
+            </Text>
+          </Flex>
+          <Flex gap={4} display={{ base: 'none', xl: 'flex' }}>
+            {sections.map((section, index) => (
+              <Button key={section.id} variant="ghost" fontWeight={currentPanel === index ? '700' : '500'} colorScheme={currentPanel === index ? 'orange' : undefined} onClick={() => handleNav(index)}>
+                {section.label}
+              </Button>
+            ))}
+          </Flex>
+          <IconButton aria-label="Toggle menu" icon={mobileMenuOpen ? <X size={18} /> : <Menu size={18} />} display={{ base: 'inline-flex', xl: 'none' }} variant="ghost" onClick={() => setMobileMenuOpen((prev) => !prev)} />
+        </Flex>
+        {mobileMenuOpen && (
+          <Stack px={4} py={4} borderTop="1px solid" borderColor={borderColor} bg={navBg}>
+            {sections.map((section, index) => (
+              <Button key={section.id} justifyContent="flex-start" variant="ghost" fontWeight={currentPanel === index ? '700' : '500'} onClick={() => handleNav(index)}>
+                {section.label}
+              </Button>
+            ))}
+          </Stack>
+        )}
+      </Box>
+
+      {/* Controls */}
+      <IconButton aria-label="Previous panel" icon={<ChevronLeft />} position="fixed" zIndex={5} top="50%" left={4} transform="translateY(-50%)" onClick={() => setCurrentPanel((prev) => Math.max(0, prev - 1))} isDisabled={currentPanel === 0} variant="outline" rounded="full" bg={navBg} display={{ base: 'none', md: 'inline-flex' }} />
+      <IconButton aria-label="Next panel" icon={<ChevronRight />} position="fixed" zIndex={5} top="50%" right={4} transform="translateY(-50%)" onClick={() => setCurrentPanel((prev) => Math.min(sections.length - 1, prev + 1))} isDisabled={currentPanel === sections.length - 1} variant="outline" rounded="full" bg={navBg} display={{ base: 'none', md: 'inline-flex' }} />
+
+      {/* Panel indicators */}
+      <Flex position="fixed" bottom={4} left="50%" transform="translateX(-50%)" zIndex={5} gap={2}>
+        {sections.map((_, index) => (
+          <Box key={index} w={currentPanel === index ? 32 : 16} h={2} borderRadius="full" bg={currentPanel === index ? accentColor : useColorModeValue('gray.300', '#2F2D4A')} transition="all 0.3s" onClick={() => handleNav(index)} cursor="pointer" />
+        ))}
+      </Flex>
+
+      {/* Panels */}
+      <Box pt={20} overflow="hidden" onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={onTouchFinish}>
+        <Flex ref={containerRef} width={`${panelContent.length * 100}vw`} transform={`translateX(-${currentPanel * 100}vw)`} transition="transform 0.7s cubic-bezier(0.4, 0, 0.2, 1)">
+          {panelContent.map((panel) => (
+            <Box key={panel.id} flex="0 0 100vw" minH="100vh">
+              {panel.content}
+            </Box>
+          ))}
+        </Flex>
       </Box>
 
       {/* Module Modal */}
       <Modal isOpen={modal.isOpen} onClose={modal.onClose} size="5xl" scrollBehavior="inside">
         <ModalOverlay />
-        <ModalContent borderRadius="2xl" p={{ base: 4, md: 6 }}>
+        <ModalContent borderRadius="2xl" bg={cardBg} border="1px solid" borderColor={borderColor}>
           <ModalHeader>
             {activeModule && (
               <Stack spacing={2} textAlign="center">
                 <Text fontSize="4xl">{activeModule.icon}</Text>
                 <Heading size="lg">{activeModule.title}</Heading>
-                <Text color="gray.600">{activeModule.description}</Text>
+                <Text color={textSubtle}>{activeModule.description}</Text>
               </Stack>
             )}
           </ModalHeader>
-          <ModalCloseButton top={4} right={4} />
+          <ModalCloseButton />
           <ModalBody>
             {activeModule && (
               <Stack spacing={8}>
                 <Box>
-                  <Heading size="md" mb={4} textAlign="center">
+                  <Heading size="md" textAlign="center" mb={4}>
                     Comprehensive Features
                   </Heading>
                   <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={4}>
                     {activeModule.detailedFeatures.map((feature) => (
-                      <Box key={feature.title} bg={cardBg} borderRadius="xl" border="1px solid" borderColor={borderColor} p={4} textAlign="center">
+                      <Card key={feature.title} cardBg={useColorModeValue('white', '#222242')} borderColor={borderColor} textAlign="center">
                         <Text fontSize="3xl">{feature.icon}</Text>
                         <Heading size="sm" mt={2} mb={1}>
                           {feature.title}
                         </Heading>
-                        <Text fontSize="sm" color="gray.600">
+                        <Text fontSize="sm" color={textSubtle}>
                           {feature.description}
                         </Text>
-                      </Box>
+                      </Card>
                     ))}
                   </SimpleGrid>
                 </Box>
-                <Box bg="blue.50" borderRadius="xl" p={6}>
+                <Box bg={useColorModeValue('#EEF2FF', '#1C1F3A')} borderRadius="xl" p={6}>
                   <Heading size="md" mb={4}>
                     Complete Feature Set
                   </Heading>
                   <SimpleGrid columns={{ base: 1, md: 2 }} spacing={3}>
                     {activeModule.features.map((feature) => (
-                      <Flex key={feature} bg="white" borderRadius="md" border="1px solid" borderColor="blue.100" p={3} align="center" gap={3}>
-                        <CheckCircle2 color="#0D8BFF" size={18} />
+                      <Flex key={feature} align="center" gap={3} bg={useColorModeValue('white', '#2A2F54')} borderRadius="md" border="1px solid" borderColor={useColorModeValue('#C7D2FE', '#3F3C73')} p={3}>
+                        <CheckCircle2 color={accentColor} size={18} />
                         <Text>{feature}</Text>
                       </Flex>
                     ))}
                   </SimpleGrid>
                 </Box>
                 <SimpleGrid columns={{ base: 1, md: 3 }} spacing={4}>
-                  <Box bg="green.50" borderRadius="xl" border="1px solid" borderColor="green.100" p={5}>
+                  <Card cardBg="#ECFDF5" borderColor="#86EFAC">
                     <Heading size="sm" mb={3}>
                       Key Benefits
                     </Heading>
-                    <List spacing={2} color="green.700">
+                    <List spacing={2} color="#15803D">
                       {activeModule.benefits.map((benefit) => (
                         <ListItem key={benefit}>
-                          <ListIcon as={CheckCircle2} color="green.500" />
+                          <ListIcon as={CheckCircle2} color="#10B981" />
                           {benefit}
                         </ListItem>
                       ))}
                     </List>
-                  </Box>
-                  <Box bg="purple.50" borderRadius="xl" border="1px solid" borderColor="purple.100" p={5}>
+                  </Card>
+                  <Card cardBg="#F5F3FF" borderColor="#DDD6FE">
                     <Heading size="sm" mb={3}>
                       Ideal For
                     </Heading>
-                    <List spacing={2} color="purple.700">
+                    <List spacing={2} color="#5B21B6">
                       {activeModule.useCases.map((useCase) => (
                         <ListItem key={useCase}>• {useCase}</ListItem>
                       ))}
                     </List>
-                  </Box>
-                  <Box bg="blue.50" borderRadius="xl" border="1px solid" borderColor="blue.100" p={5}>
+                  </Card>
+                  <Card cardBg="#EFF6FF" borderColor="#BFDBFE">
                     <Heading size="sm" mb={3}>
                       Ready to Deploy
                     </Heading>
-                    <Text color="gray.700" mb={4}>
-                      Ready to implement this module and transform HR?
+                    <Text color="#1E3A8A" mb={4}>
+                      Implement this module and transform HR in weeks, not months.
                     </Text>
                     <Stack>
-                      <Button colorScheme="blue" onClick={() => handleScroll('contact')}>
+                      <Button colorScheme="purple" onClick={() => handleNav(sections.findIndex((s) => s.id === 'contact'))}>
                         Request Demo
                       </Button>
-                      <Button variant="outline" onClick={() => handleScroll('case-studies')}>
+                      <Button variant="outline" onClick={() => handleNav(sections.findIndex((s) => s.id === 'case-studies'))}>
                         View Case Studies
                       </Button>
                     </Stack>
-                  </Box>
+                  </Card>
                 </SimpleGrid>
               </Stack>
             )}
@@ -847,4 +902,18 @@ function App() {
   )
 }
 
-export default App
+function SectionContainer({ children }: { children: React.ReactNode }) {
+  return (
+    <Flex minH="100vh" px={{ base: 6, md: 16 }} py={{ base: 20, md: 24 }} justify="center" align="center">
+      {children}
+    </Flex>
+  )
+}
+
+function Card({ cardBg, borderColor, children, ...rest }: { cardBg: string; borderColor: string; children: React.ReactNode } & Record<string, any>) {
+  return (
+    <Box bg={cardBg} borderRadius="2xl" border="1px solid" borderColor={borderColor} p={6} {...rest}>
+      {children}
+    </Box>
+  )
+}
